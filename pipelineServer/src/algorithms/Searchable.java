@@ -1,9 +1,12 @@
 package algorithms;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public interface Searchable<T> {
 	State<T> getInitialState();
-	ArrayList<State<T>>getPossibleStates(State<T> s);
-	boolean isGoalState(State<T> s);
+
+	State<T> getGoalState();
+
+	ArrayList<State<T>> getAllPossibleStates(State<T> s);
 }

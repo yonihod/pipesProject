@@ -1,40 +1,59 @@
 package algorithms;
 
-public class State<T>{
+public class State<T> implements Comparable{
 	T state;
 	State<T> cameFrom;
-	double cost;
+	double cost = 0;
 
-	T getState() {
+	public T getState() {
 		return state;
 	}
 
-	void setState(T state) {
+	public void setState(T state) {
 		this.state = state;
 	}
 
-	State<T> getCameFrom() {
+	public State<T> getCameFrom() {
 		return cameFrom;
 	}
 
-	void setCameFrom(State<T> cameFrom) {
+	public void setCameFrom(State<T> cameFrom) {
 		this.cameFrom = cameFrom;
 	}
 
-	double getCost() {
+	public double getCost() {
 		return cost;
 	}
 
-	void setCost(double cost) {
+	public void setCost(double cost) {
 		this.cost = cost;
 	}
 
+	// check equals()
 	public boolean equals(State<T> state) {
-		return state.toString().equals(this.state.toString());}
-
-	public int hashcode() {
-		return this.getState().hashCode();
-		
+		return state.toString().equals(this.state.toString());
 	}
 
+	// hashcode?
+	public int hashcode() {
+		return this.getState().hashCode();
+
+	}
+	
+	@Override
+	public int compareTo(Object o) {
+		State<T> otherState = (State<T>) o;
+
+		if (this.getCost() == otherState.getCost())
+			return 0;
+		if (this.getCost() > otherState.getCost())
+			return 1;
+		else
+			return -1;
+	}
+
+	@Override
+	public String toString() {
+		return this.state.toString();
+	}
 }

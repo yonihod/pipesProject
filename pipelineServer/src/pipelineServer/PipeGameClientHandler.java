@@ -29,6 +29,16 @@ public class PipeGameClientHandler implements ClientHandler {
 					if (solution != null) {
 						System.out.println(solution);
 						output.println(solution);
+					} else {
+						
+						LevelSolver ls = new LevelSolver();
+						String solved = ls.Solve(gameBoard);
+						
+						cacheManager.setSolution(gameBoard, solved);
+						
+						System.out.println(solved);
+						output.println(solved);
+						
 					}
 					System.out.println("done");
 					output.println("done");

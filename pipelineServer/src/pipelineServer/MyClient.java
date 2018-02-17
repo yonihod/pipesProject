@@ -30,6 +30,9 @@ public class MyClient {
 		output.println("L-|--|-L");
 		output.println("L------L");
 		output.println("L--|---g");
+//		output.println("s  ");
+//		output.println("-  ");
+//		output.println("Lg ");
 		output.println("done");
 		while ((inputLine = input.readLine()) != null) {
 			System.out.println(inputLine);
