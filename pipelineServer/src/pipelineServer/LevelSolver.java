@@ -1,9 +1,10 @@
 package pipelineServer;
 
 import java.util.ArrayList;
-
-import BFS.BFS;
+import BFS.*;
 import algorithms.*;
+import model.Board;
+import model.PipeGameBoard;
 
 public class LevelSolver {
 	
@@ -39,14 +40,16 @@ public class LevelSolver {
 			}
 		}
 		
-		
-		PipelineSearchable searchale =  new PipelineSearchable(board); 
+				
+		PipelineSearchable searchale =  new PipelineSearchable(new PipeGameBoard(board)); 
 		searchale.setInitialState(startPoint);
 		searchale.setGoalState(endPoint);
 		
-		BFS<PipelineState> bfs = new BFS<PipelineState>();
-		Solution<PipelineState> solution = bfs.search(searchale);
+		//BestFirstSearch<PipelineState> bfs = new BestFirstSearch<PipelineState>();
+		//Solution<PipelineState> solution = bfs.search(searchale);
 		
+		SearcherAdpater<PipelineState> searcher = new SearcherAdpater<>(board.length);
+		Solution<PipelineState> solution = searcher.search(searchale);
 		
 		if(solution != null) { 
 			String moves = "";

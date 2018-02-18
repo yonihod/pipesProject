@@ -2,13 +2,15 @@ package algorithms;
 
 import java.util.*;
 
+import model.Board;
+
 public class PipelineSearchable implements Searchable<PipelineState> {
 
 	State<PipelineState> initialState;
 	State<PipelineState> goalState;
-	char[][] board;
 	ArrayList<State<PipelineState>> possibleStates = new ArrayList();
 	private Map<String, State<PipelineState>> states = new HashMap<String, State<PipelineState>>();
+	Board<Character> board;
 
 	HashMap<String, String[]> charToDirection = new HashMap<String, String[]>() {
 		{
@@ -88,7 +90,7 @@ public class PipelineSearchable implements Searchable<PipelineState> {
 		}
 	};
 
-	public PipelineSearchable(char[][] board) {
+	public PipelineSearchable(Board<Character> board) {
 		this.board = board;
 	}
 
@@ -142,23 +144,9 @@ public class PipelineSearchable implements Searchable<PipelineState> {
 			}
 		}
 
-		//
-		// String[] directions = charToDirection.get(value);
-		//
-		// for(int i = 0; i < directions.length; i++) {
-		// switch (directions[i]) {
-		// case "down":
-		// moveDown(s);
-		// break;
-		//
-		// default:
-		// break;
-		// }
-		// }
-
-		if (x >= 0 && x < board[0].length - 1 && canLeft) {
-			if (board[y][x + 1] != ' ' && !checkIfCameFrom(x+1, y, s.getCameFrom())) {
-				char targetChar = board[y][x + 1];
+		if (x >= 0 && x <  board.getWidth() - 1 && canLeft) {
+			if (board.getXY(x + 1, y) != ' ' && !checkIfCameFrom(x+1, y, s.getCameFrom())) {
+				char targetChar = board.getXY(x + 1, y);
 				char[] changeTo = charToOptions.get("left," + targetChar);
 
 				for (int i = 0; i < changeTo.length; i++) {
@@ -168,9 +156,9 @@ public class PipelineSearchable implements Searchable<PipelineState> {
 				}
 			}
 		}
-		if (x != 0 && x <= board[0].length - 1 && canRight) {
-			if (board[y][x - 1] != ' ' && !checkIfCameFrom(x-1, y, s.getCameFrom())) {
-				char targetChar = board[y][x - 1];
+		if (x != 0 && x <= board.getWidth() - 1 && canRight) {
+			if (board.getXY(x-1, y)!= ' ' && !checkIfCameFrom(x-1, y, s.getCameFrom())) {
+				char targetChar = board.getXY(x-1, y);
 				char[] changeTo = charToOptions.get("right," + targetChar);
 
 				for (int i = 0; i < changeTo.length; i++) {
@@ -182,9 +170,9 @@ public class PipelineSearchable implements Searchable<PipelineState> {
 			}
 		}
 
-		if (y >= 0 && y < board.length - 1 && canUp) {
-			if (board[y + 1][x] != ' ' && !checkIfCameFrom(x, y + 1, s.getCameFrom())) {
-				char targetChar = board[y + 1][x];
+		if (y >= 0 && y < board.getHieght() - 1 && canUp) {
+			if (board.getXY(y+1, x) != ' ' && !checkIfCameFrom(x, y + 1, s.getCameFrom())) {
+				char targetChar = board.getXY(y + 1, x);
 				char[] changeTo = charToOptions.get("up," + targetChar);
 
 				for (int i = 0; i < changeTo.length; i++) {
@@ -195,9 +183,9 @@ public class PipelineSearchable implements Searchable<PipelineState> {
 				}
 			}
 		}
-		if (y != 0 && y <= board.length - 1 && canDown) {
-			if (board[y - 1][x] != ' ' && !checkIfCameFrom(x, y - 1, s.getCameFrom())) {
-				char targetChar = board[y - 1][x];
+		if (y != 0 && y <= board.getHieght() - 1 && canDown) {
+			if (board.getXY(y-1, x) != ' ' && !checkIfCameFrom(x, y - 1, s.getCameFrom())) {
+				char targetChar = board.getXY(y-1, x);
 				char[] changeTo = charToOptions.get("down," + targetChar);
 
 				for (int i = 0; i < changeTo.length; i++) {

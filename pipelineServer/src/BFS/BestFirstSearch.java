@@ -1,14 +1,12 @@
 package BFS;
+
 import java.util.*;
 import algorithms.*;
 
-
-public class BFS<T> extends CommonSearcher<T> {
+public class BestFirstSearch<T> extends CommonSearcher<T> {
 
 	@Override
-	public Solution search(Searchable<T> s) {
-		
-		
+	public Solution<T> search(Searchable<T> s) {
 		addToOpenList(s.getInitialState());
 		HashSet<State<T>> closedSet = new HashSet<State<T>>();
 
@@ -56,12 +54,4 @@ public class BFS<T> extends CommonSearcher<T> {
 		openList.add(initialState);
 	}
 
-
-
 }
-
-
-
-
-
-	
