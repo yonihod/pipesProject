@@ -9,9 +9,11 @@ import java.io.PrintWriter;
 
 public class PipeGameClientHandler implements ClientHandler {
 	CacheManager cacheManager;
+	Solver solver;
 
-	public PipeGameClientHandler(CacheManager cManager) {
+	public PipeGameClientHandler(CacheManager cManager,Solver s) {
 		cacheManager = cManager;
+		this.solver=s;
 	}
 
 	@Override
@@ -23,7 +25,7 @@ public class PipeGameClientHandler implements ClientHandler {
 		String solution = "";
 		try {
 			while ((inputLine = input.readLine()) != null) {
-				System.out.println("Server: " + inputLine);
+				//System.out.println("Server: " + inputLine);
 				if (inputLine.toLowerCase().equals("done")) {
 					solution = cacheManager.getSolution(gameBoard);
 					if (solution != null) {
@@ -31,16 +33,15 @@ public class PipeGameClientHandler implements ClientHandler {
 						output.println(solution);
 					} else {
 						
-						LevelSolver ls = new LevelSolver();
-						String solved = ls.Solve(gameBoard);
+						String solved = solver.Solve(gameBoard);
 						
 						cacheManager.setSolution(gameBoard, solved);
 						
-						System.out.println(solved);
+						//System.out.println(solved);
 						output.println(solved);
 						
 					}
-					System.out.println("done");
+					//System.out.println("done");
 					output.println("done");
 
 				} else {

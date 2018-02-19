@@ -27,39 +27,45 @@ public class MyServer implements Server {
 		try {
 			server = new ServerSocket(port);
 		} catch (IOException e) {
-			System.out.println("Can't listen on " + port);
+			// System.out.println("Can't listen on " + port);
 			System.exit(1);
 		}
 	}
 
 	@Override
 	public void start(ClientHandler clientHandler) {
-		
-		ch = clientHandler;
-		runServer();
-		try {
-			while(!stop) {
-			System.out.println("Listening for connection.");
-			sClient = server.accept();
-			System.out.println("Connection successful");
-			System.out.println("Listening for input...");
+		new Thread(new Runnable() {
 
-			ch.handleClient(sClient.getInputStream(), sClient.getOutputStream());
-			
-			System.out.println("Client ended.");
-			sClient.close();
-			System.out.println("Client closed");
+			@Override
+			public void run() {
+				ch = clientHandler;
+				runServer();
+				try {
+					while (!stop) {
+						// System.out.println("Listening for connection.");
+						sClient = server.accept();
+						// System.out.println("Connection successful");
+						// System.out.println("Listening for input...");
+
+						ch.handleClient(sClient.getInputStream(), sClient.getOutputStream());
+
+						// System.out.println("Client ended.");
+						sClient.close();
+						// System.out.println("Client closed");
+					}
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				try {
+					server.close();
+					// System.out.println("server is close");
+
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+
 			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		try {
-			server.close();
-			System.out.println("server is close");
-
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		}).start();
 	}
 
 	@Override

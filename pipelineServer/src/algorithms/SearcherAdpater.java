@@ -7,7 +7,8 @@ public class SearcherAdpater<T> implements Searcher<T> {
 	Searcher<T> searcher = null;
 
 	public SearcherAdpater(Integer N) {
-		searcher = new BestFirstSearch<T>();
+		searcher = new DFS<T>();
+		//searcher = new BFS<T>();
 	}
 
 	@Override

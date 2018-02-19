@@ -171,8 +171,8 @@ public class PipelineSearchable implements Searchable<PipelineState> {
 		}
 
 		if (y >= 0 && y < board.getHieght() - 1 && canUp) {
-			if (board.getXY(y+1, x) != ' ' && !checkIfCameFrom(x, y + 1, s.getCameFrom())) {
-				char targetChar = board.getXY(y + 1, x);
+			if (board.getXY(x, y+1) != ' ' && !checkIfCameFrom(x, y + 1, s.getCameFrom())) {
+				char targetChar = board.getXY(x, y + 1);
 				char[] changeTo = charToOptions.get("up," + targetChar);
 
 				for (int i = 0; i < changeTo.length; i++) {
@@ -184,8 +184,8 @@ public class PipelineSearchable implements Searchable<PipelineState> {
 			}
 		}
 		if (y != 0 && y <= board.getHieght() - 1 && canDown) {
-			if (board.getXY(y-1, x) != ' ' && !checkIfCameFrom(x, y - 1, s.getCameFrom())) {
-				char targetChar = board.getXY(y-1, x);
+			if (board.getXY(x, y-1) != ' ' && !checkIfCameFrom(x, y - 1, s.getCameFrom())) {
+				char targetChar = board.getXY(x, y-1);
 				char[] changeTo = charToOptions.get("down," + targetChar);
 
 				for (int i = 0; i < changeTo.length; i++) {

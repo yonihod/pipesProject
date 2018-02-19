@@ -7,7 +7,7 @@ public class BestFirstSearch<T> extends CommonSearcher<T> {
 
 	@Override
 	public Solution<T> search(Searchable<T> s) {
-		addToOpenList(s.getInitialState());
+		openList.add(s.getInitialState());
 		HashSet<State<T>> closedSet = new HashSet<State<T>>();
 
 		while (openList.size() > 0) {
@@ -19,19 +19,15 @@ public class BestFirstSearch<T> extends CommonSearcher<T> {
 
 			ArrayList<State<T>> successors = s.getAllPossibleStates(n);
 			for (State<T> state : successors) {
-				if (!closedSet.contains(state) && !openListContains(state)) {
+				if (!closedSet.contains(state) && !openList.contains(state)) {
 					state.setCameFrom(n);
-					addToOpenList(state);
+					openList.add(state);
 
 				}
 			}
 
 		}
 		return null;
-	}
-
-	private boolean openListContains(State<T> state) {
-		return openList.contains(state);
 	}
 
 	private Solution<T> backTrace(State<T> goalState, State<T> initialState) {
@@ -49,9 +45,4 @@ public class BestFirstSearch<T> extends CommonSearcher<T> {
 
 		return solution;
 	}
-
-	private void addToOpenList(State<T> initialState) {
-		openList.add(initialState);
-	}
-
 }

@@ -3,27 +3,28 @@ package BFS;
 import java.util.*;
 import algorithms.*;
 
-public class BFS<T> extends CommonSearcher<T> {
+public class DFS<T> extends CommonSearcher<T> {
 
-	Queue<State<T>> queue = new LinkedList<>();
+	Stack<State<T>> stack = new Stack<>();
 	@Override
 	public Solution search(Searchable<T> s) {
 
-		queue.add(s.getInitialState());
+		stack.add(s.getInitialState());
 		HashSet<State<T>> closedSet = new HashSet<State<T>>();
 
-		while (queue.size() > 0) {
-			State<T> n = queue.poll();
+		while (stack.size() > 0) {
+			State<T> n = stack.pop();
 			closedSet.add(n);
+			
 			if (n.equals(s.getGoalState())) {
 				return backTrace(n, s.getInitialState());
 			}
 
 			ArrayList<State<T>> successors = s.getAllPossibleStates(n);
 			for (State<T> state : successors) {
-				if (!closedSet.contains(state) && !queue.contains(state)) {
+				if (!closedSet.contains(state) && !stack.contains(state)) {
 					state.setCameFrom(n);
-					queue.add(state);
+					stack.add(state);
 
 				}
 			}

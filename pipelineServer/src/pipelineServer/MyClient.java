@@ -26,10 +26,10 @@ public class MyClient {
 		String userInput;
 		String inputLine;
 		// System.out.println("Waiting for input");
-		output.println("s7 -");
-		output.println(" -|L");
-		output.println(" -fJ");
-		output.println(" 7g ");
+		output.println("s--7");
+		output.println("L-|g");
+	//	output.println(" -fJ");
+	//	output.println(" 7g ");
 //		output.println("s  ");
 //		output.println("-  ");
 //		output.println("Lg ");
