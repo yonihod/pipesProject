@@ -16,10 +16,10 @@ public class MyClient {
 			output = new PrintWriter(sock.getOutputStream(), true);
 			input = new BufferedReader(new InputStreamReader(sock.getInputStream()));
 		} catch (UnknownHostException e) {
-			System.out.println("Unknown host");
+			//System.out.println("Unknown host");
 			System.exit(1);
 		} catch (IOException ie) {
-			System.out.println("Cannot connect to host");
+			//System.out.println("Cannot connect to host");
 			System.exit(1);
 		}
 		BufferedReader stdIn = new BufferedReader(new InputStreamReader(System.in));
@@ -28,14 +28,14 @@ public class MyClient {
 		// System.out.println("Waiting for input");
 		output.println("s--7");
 		output.println("L-|g");
-	//	output.println(" -fJ");
-	//	output.println(" 7g ");
-//		output.println("s  ");
-//		output.println("-  ");
-//		output.println("Lg ");
+		// output.println(" -fJ");
+		// output.println(" 7g ");
+		// output.println("s ");
+		// output.println("- ");
+		// output.println("Lg ");
 		output.println("done");
 		while ((inputLine = input.readLine()) != null) {
-			System.out.println(inputLine);
+			//System.out.println(inputLine);
 			if (inputLine.equals("done"))
 				break;
 		}

@@ -9,6 +9,6 @@ public class testServer {
 
 		String solved = ls.Solve(gameBoard2);
 		
-		System.out.println("Solution: " + solved);
+	//	System.out.println("Solution: " + solved);
 	}
 }
