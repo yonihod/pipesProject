@@ -1,4 +1,4 @@
-package BFS;
+package algorithms;
 
 import java.util.*;
 import algorithms.*;

@@ -18,40 +18,35 @@ public class PipeGameClientHandler implements ClientHandler {
 
 	@Override
 	public void handleClient(InputStream inFromClient, OutputStream outToClient) {
+		
 		PrintWriter output = new PrintWriter(outToClient, true);
 		BufferedReader input = new BufferedReader(new InputStreamReader(inFromClient));
+		
 		String inputLine;
 		String gameBoard = "";
 		String solution = "";
+		
 		try {
 			while ((inputLine = input.readLine()) != null) {
-				//System.out.println("Server: " + inputLine);
+
 				if (inputLine.toLowerCase().equals("done")) {
 					solution = cacheManager.getSolution(gameBoard);
 					if (solution != null) {
-						//System.out.println(solution);
 						output.println(solution);
 					} else {
 						
 						String solved = solver.Solve(gameBoard);
-						
 						cacheManager.setSolution(gameBoard, solved);
-						
-						//System.out.println(solved);
 						output.println(solved);
-						
 					}
-					//System.out.println("done");
 					output.println("done");
 
 				} else {
 					gameBoard += inputLine;
 					gameBoard += "\n";
-					// output.println(inputLine);
 				}
 			}
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
