@@ -5,14 +5,6 @@ import java.util.HashMap;
 public class SolutionCacheManager implements CacheManager {
 
 	HashMap<String, String> solutions = new HashMap<String, String>();
-	
-	public SolutionCacheManager(CacheManager cache) {
-
-	}
-
-	public SolutionCacheManager() {
-
-	}
 
 	public String getSolution(String game) {
 		return solutions.get(game);

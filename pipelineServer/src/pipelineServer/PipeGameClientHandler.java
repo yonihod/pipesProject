@@ -40,6 +40,7 @@ public class PipeGameClientHandler implements ClientHandler {
 						output.println(solved);
 					}
 					output.println("done");
+					output.flush();
 
 				} else {
 					gameBoard += inputLine;

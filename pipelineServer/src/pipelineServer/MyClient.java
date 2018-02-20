@@ -44,6 +44,12 @@ public class MyClient {
 		BufferedReader stdIn = new BufferedReader(new InputStreamReader(System.in));
 		String userInput;
 		String inputLine;
+		try {
+			Thread.sleep(400);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		// System.out.println("Waiting for input");
 		output.println("s--7");
 		output.println("L-|g");
@@ -54,7 +60,7 @@ public class MyClient {
 		// output.println("Lg ");
 		output.println("done");
 		while ((inputLine = input.readLine()) != null) {
-			//System.out.println(inputLine);
+			System.out.println(inputLine);
 			if (inputLine.equals("done"))
 				break;
 		}

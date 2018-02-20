@@ -40,25 +40,20 @@ public class MyServer implements Server {
 			public void run() {
 				ch = clientHandler;
 				runServer();
-				try {
+
 					while (!stop) {
-						// System.out.println("Listening for connection.");
+						try {
 						sClient = server.accept();
-						// System.out.println("Connection successful");
-						// System.out.println("Listening for input...");
-
+						sClient.setSoTimeout(3000);
 						ch.handleClient(sClient.getInputStream(), sClient.getOutputStream());
-
-						// System.out.println("Client ended.");
 						sClient.close();
-						// System.out.println("Client closed");
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
 					}
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
+				
 				try {
 					server.close();
-					// System.out.println("server is close");
 
 				} catch (IOException e) {
 					e.printStackTrace();
