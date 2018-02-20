@@ -22,7 +22,7 @@ public class CLIclient {
 	public void start(String ip, int port) {
 		try {
 			Socket theServer = new Socket(ip, port);
-			System.out.println("connected to server");
+			//System.out.println("connected to server");
 
 			BufferedReader userInput = new BufferedReader(new InputStreamReader(System.in));
 			BufferedReader serverInput = new BufferedReader(new InputStreamReader(theServer.getInputStream()));

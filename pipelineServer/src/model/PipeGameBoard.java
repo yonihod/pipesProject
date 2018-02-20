@@ -1,7 +1,19 @@
 package model;
 
-public class PipeGameBoard implements Board<Character> {
+import java.io.Serializable;
+
+public class PipeGameBoard implements Board<Character>, Serializable {
+	public char[][] getBoard() {
+		return board;
+	}
+
+	public void setBoard(char[][] board) {
+		this.board = board;
+	}
+
 	char[][] board;
+	
+	public PipeGameBoard() {}
 	
 	public PipeGameBoard(char[][] board) {
 		this.board = board;

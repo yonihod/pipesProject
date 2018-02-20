@@ -1,41 +1,24 @@
 package model;
 
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
-
+import java.io.*;
 public class MyObjectLevelSaver implements LevelSaver {
 
 	@Override
-	public boolean SaveLevel(Level level, String filePath) {
-		FileOutputStream stream = null;
+	public boolean SaveLevel(PipeGameBoard board, String filePath) {
 		try {
+			FileOutputStream stream = null;
+
 			stream = new FileOutputStream(filePath);
-		} catch (FileNotFoundException e2) {
-			// TODO Auto-generated catch block
-			e2.printStackTrace();
-		}
-		ObjectOutputStream e = null;
-		try {
-			e = new ObjectOutputStream(stream);
-		} catch (IOException e2) {
-			// TODO Auto-generated catch block
-			e2.printStackTrace();
-		}
-		try {
-			e.writeObject(level);
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		try {
+			ObjectOutputStream e = new ObjectOutputStream(stream);
+			e.writeObject(board);
 			e.close();
-		} catch (IOException e1) {
+			return true;
+
+		} catch (Exception e2) {
 			// TODO Auto-generated catch block
-			e1.printStackTrace();
+			e2.printStackTrace();
+			return false;
 		}
-		return true;
 	}
 
 }

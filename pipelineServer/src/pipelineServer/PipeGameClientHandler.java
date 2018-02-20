@@ -29,7 +29,7 @@ public class PipeGameClientHandler implements ClientHandler {
 				if (inputLine.toLowerCase().equals("done")) {
 					solution = cacheManager.getSolution(gameBoard);
 					if (solution != null) {
-						System.out.println(solution);
+						//System.out.println(solution);
 						output.println(solution);
 					} else {
 						

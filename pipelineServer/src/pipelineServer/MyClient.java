@@ -3,9 +3,28 @@ package pipelineServer;
 import java.io.*;
 import java.net.*;
 
+import model.FileAdapter;
+import model.MyTextLevelLoader;
+import model.PipeGameBoard;
+
 public class MyClient {
 
 	public static void main(String[] args) throws IOException {
+		
+		
+//		int a = 1;
+		
+//		if(a == 1) {
+//			MyTextLevelLoader txtLoader = new MyTextLevelLoader();
+//			PipeGameBoard l1 =  txtLoader.loadLevel("/Users/valeriamadaev/temp/l.txt");
+//	
+//			FileAdapter fa = new FileAdapter();
+//			fa.SaveLevel(l1, "/Users/valeriamadaev/temp/l2.xml");
+//			
+//			PipeGameBoard l2 = fa.loadLevel("/Users/valeriamadaev/temp/l2.xml");
+//			fa.SaveLevel(l2, "/Users/valeriamadaev/temp/l3.txt");
+//		} else {
+		
 
 		Socket sock = null;
 		PrintWriter output = null;
@@ -51,5 +70,6 @@ public class MyClient {
 		input.close();
 		stdIn.close();
 		sock.close();
+//		}
 	}
 }

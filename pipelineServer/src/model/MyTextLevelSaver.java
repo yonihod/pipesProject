@@ -1,47 +1,34 @@
 package model;
 
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.util.ArrayList;
+import java.io.*;
 
 public class MyTextLevelSaver implements LevelSaver {
 
 	@Override
-	public boolean SaveLevel(Level level, String filePath) {
+	public boolean SaveLevel(PipeGameBoard baord, String filePath) {
 		String fileContent = "";
-		ArrayList<ArrayList<GameObject>> board = level.getGameBoard();
 
-		LevelConvertor lc = new LevelConvertor();
-
-		for (int i = 0; i < board.size(); i++) {
-			for (int j = 0; j < board.get(i).size(); j++) {
-				fileContent += lc.convertFromObjectToChar(board.get(i).get(j));
+		for (int i = 0; i < baord.getHieght(); i++) {
+			for (int j = 0; j < baord.getWidth(); j++) {
+				fileContent += baord.getXY(j, i);
 			}
 
-			fileContent += System.lineSeparator();
+			if (i != baord.getHieght() - 1) {
+				fileContent += "/n";
+			}
 		}
 
 		FileOutputStream stream = null;
 		try {
 			stream = new FileOutputStream(filePath);
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		try {
 			stream.write(fileContent.getBytes());
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		try {
 			stream.close();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			return true;
+
+		} catch (Exception e) {
 			e.printStackTrace();
+			return false;
 		}
 
-		return true;
 	}
 }
