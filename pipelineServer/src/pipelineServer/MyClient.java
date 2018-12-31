@@ -10,28 +10,13 @@ import model.PipeGameBoard;
 public class MyClient {
 
 	public static void main(String[] args) throws IOException {
-		
-		
-//		int a = 1;
-		
-//		if(a == 1) {
-//			MyTextLevelLoader txtLoader = new MyTextLevelLoader();
-//			PipeGameBoard l1 =  txtLoader.loadLevel("/Users/valeriamadaev/temp/l.txt");
-//	
-//			FileAdapter fa = new FileAdapter();
-//			fa.SaveLevel(l1, "/Users/valeriamadaev/temp/l2.xml");
-//			
-//			PipeGameBoard l2 = fa.loadLevel("/Users/valeriamadaev/temp/l2.xml");
-//			fa.SaveLevel(l2, "/Users/valeriamadaev/temp/l3.txt");
-//		} else {
-		
 
 		Socket sock = null;
 		PrintWriter output = null;
 		BufferedReader input = null;
 
 		try {
-			sock = new Socket("127.0.0.1", 10007);
+			sock = new Socket("127.0.0.1", 6500);
 			output = new PrintWriter(sock.getOutputStream(), true);
 			input = new BufferedReader(new InputStreamReader(sock.getInputStream()));
 		} catch (UnknownHostException e) {
@@ -51,14 +36,14 @@ public class MyClient {
 			e.printStackTrace();
 		}
 		// System.out.println("Waiting for input");
-		output.println("s--7");
-		output.println("L-|g");
+		//output.println("s--7");
+		//output.println("L-|g");
 		// output.println(" -fJ");
 		// output.println(" 7g ");
 		// output.println("s ");
 		// output.println("- ");
 		// output.println("Lg ");
-		output.println("done");
+//		output.println("done");
 		while ((inputLine = input.readLine()) != null) {
 			System.out.println(inputLine);
 			if (inputLine.equals("done"))

@@ -1,19 +1,22 @@
 package pipelineServer;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.PrintWriter;
+import pipelineServer.scheduler.Request;
+import pipelineServer.scheduler.RequestScheduler;
 
-public class PipeGameClientHandler implements ClientHandler {
+import java.io.*;
+
+public class PriorityPipedGameClientHandler implements ClientHandler {
 	CacheManager cacheManager;
 	Solver solver;
+	private int POOL_SIZE = 5;
+	private int QUEUE_SIZE = 10;
+	private RequestScheduler requestScheduler;
 
-	public PipeGameClientHandler(CacheManager cManager,Solver s) {
+
+	public PriorityPipedGameClientHandler(CacheManager cManager, Solver s) {
 		cacheManager = cManager;
 		this.solver=s;
+		requestScheduler = new RequestScheduler(POOL_SIZE,QUEUE_SIZE);
 	}
 
 	@Override
@@ -30,18 +33,9 @@ public class PipeGameClientHandler implements ClientHandler {
 			while ((inputLine = input.readLine()) != null) {
 
 				if (inputLine.toLowerCase().equals("done")) {
-					solution = cacheManager.getSolution(gameBoard);
-					if (solution != null) {
-						output.println(solution);
-					} else {
-						
-						String solved = solver.Solve(gameBoard);
-						cacheManager.setSolution(gameBoard, solved);
-						output.println(solved);
-					}
-					output.println("done");
-					output.flush();
-
+					Request request = new Request(gameBoard.length(), solver, cacheManager, inFromClient, outToClient, gameBoard);
+					requestScheduler.scheduleJob(request);
+					break;
 				} else {
 					gameBoard += inputLine;
 					gameBoard += "\n";

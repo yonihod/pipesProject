@@ -1,17 +1,20 @@
 package pipelineServer;
 
-import java.io.*;
-import java.net.*;
+import pipelineServer.scheduler.Request;
+import pipelineServer.scheduler.RequestScheduler;
 
-public class MyServer implements Server {
+import java.io.IOException;
+import java.net.ServerSocket;
+import java.net.Socket;
+
+public class ServerWithThreadPool implements Server {
 
 	private int port;
-	private ClientHandler ch;
 	private volatile boolean stop = false;
 	private ServerSocket server;
 	private Socket sClient;
 
-	public MyServer(int port) {
+	public ServerWithThreadPool(int port) {
 		this.port = port;
 	}
 
@@ -38,14 +41,12 @@ public class MyServer implements Server {
 
 			@Override
 			public void run() {
-				ch = clientHandler;
 					runServer();
 					System.out.println("started server on port "+port);
 					while (!stop) {
 						try {
 							sClient = server.accept();
-							ch.handleClient(sClient.getInputStream(), sClient.getOutputStream());
-							sClient.close();
+							clientHandler.handleClient(sClient.getInputStream(), sClient.getOutputStream());
 						} catch (IOException e) {
 							e.printStackTrace();
 						}
