@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="pipelineServer:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/pipelineServer_jar</output-path>
+    <root id="archive" name="pipelineServer.jar">
+      <element id="module-output" name="pipelineServer" />
+    </root>
+  </artifact>
+</component>
