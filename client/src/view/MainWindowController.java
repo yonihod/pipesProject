@@ -129,7 +129,7 @@ public class MainWindowController implements Initializable, View {
     public void openFile() throws FileNotFoundException {
         FileChooser fc = new FileChooser();
         fc.setTitle("Open File");
-        fc.setInitialDirectory(new File("./client/resources"));
+        fc.setInitialDirectory(new File("./resources"));
         fc.getExtensionFilters().add(new FileChooser.ExtensionFilter("TXT files (*.txt)", "*.txt"));
         fc.getExtensionFilters().add(new FileChooser.ExtensionFilter("XML files (*.xml)", "*.xml"));
         File chosen = fc.showOpenDialog(null);
@@ -165,7 +165,7 @@ public class MainWindowController implements Initializable, View {
         if (boardData != null) {
             FileChooser fc = new FileChooser();
             fc.setTitle("Save file");
-            fc.setInitialDirectory(new File("./client/resources"));
+            fc.setInitialDirectory(new File("/resources"));
             fc.getExtensionFilters().add(new FileChooser.ExtensionFilter("TXT files (*.txt)", "*.txt"));
             fc.getExtensionFilters().add(new FileChooser.ExtensionFilter("XML files (*.xml)", "*.xml"));
             fc.getExtensionFilters().add(new FileChooser.ExtensionFilter("Object files (*.obj)", "*.obj"));

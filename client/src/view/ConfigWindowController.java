@@ -57,7 +57,7 @@ public class ConfigWindowController {
     public void setAddress(){
         PrintWriter writer = null;
         try {
-            writer = new PrintWriter(new File("./client/gameConf.txt"));
+            writer = new PrintWriter(new File("gameConf.txt"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -69,7 +69,7 @@ public class ConfigWindowController {
     public void setMusic(){
         FileChooser fc = new FileChooser();
         fc.setTitle("Open Audio File");
-        fc.setInitialDirectory(new File("./client/resources"));
+        fc.setInitialDirectory(new File("./resources"));
         File chosen = fc.showOpenDialog(null);
         URI uri = chosen.toURI();
         if(chosen!=null) {
@@ -81,7 +81,7 @@ public class ConfigWindowController {
     public void setBackgroundImage() throws FileNotFoundException {
         FileChooser fc = new FileChooser();
         fc.setTitle("Open Img File");
-        fc.setInitialDirectory(new File("./client/resources"));
+        fc.setInitialDirectory(new File("./resources"));
         File chosen = fc.showOpenDialog(null);
         if(chosen!=null) {
             mwc.setBgImg(chosen);

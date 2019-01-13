@@ -20,7 +20,7 @@ class MyButton extends Button {
                 break;
 
             default:
-                color = Color.BLACK;
+                color = Color.TRANSPARENT;
         }
         color = javafx.scene.paint.Color.rgb(193,200,209);
         setTextFill(color);

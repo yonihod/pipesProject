@@ -3,14 +3,19 @@ package view;
 
 
 import javafx.beans.property.*;
+import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Background;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
 
 import java.io.*;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
 
 public class PipeBoard extends GridPane {
 
@@ -46,6 +51,7 @@ public class PipeBoard extends GridPane {
 
 
     private BooleanProperty gameStatus;
+    private ArrayList<String> solution;
 
 
     public PipeBoard() {
@@ -73,8 +79,27 @@ public class PipeBoard extends GridPane {
         out.flush();
 
         String response = in.readLine();
+        ArrayList<String> solution = new ArrayList<>();
 
+        while(!response.equals("done")) {
+//            System.out.println(response);
+            solution.add(response);
+            response = in.readLine();
+        }
+        in.close();
+        out.close();
+        s.close();
+        this.solution = solution;
+        ArrayList<Solution> interpretedSolutionArray = new ArrayList<>();
+        for (String str: solution) {
+            Solution newSolution = new Solution(str);
+            interpretedSolutionArray.add(newSolution);
+        }
+        for (Solution sol: interpretedSolutionArray) {
+            rotate(sol.getPoint().getI(),sol.getPoint().getJ(),sol.getTimesToRotate(),true);
+        }
     }
+
     public String boardToString(char[][] board){
         StringBuilder sb = new StringBuilder();
         for(int i=0;i<board.length;i++){
@@ -180,11 +205,24 @@ public class PipeBoard extends GridPane {
         }
         return false;
     }
+    //redraw one specific node for animation
+    public void redraw(int row,int col){
+        Node currentNode = null;
+        ObservableList<Node> childrens = this.getChildren();
+        for (Node node : childrens) {
+            if(this.getRowIndex(node) == row && this.getColumnIndex(node) == col) {
+                currentNode = node;
+                break;
+            }
+        }
+        applyPhoto((MyButton)currentNode,boardData[row][col].get());
+        currentNode.getStyleClass().add("colored");
+    }
 
     public void redraw() {
         this.getChildren().clear();
         if (boardData != null) {
-            for(int i =0 ; i < boardData.length ;i++){
+            for(int i = 0 ; i < boardData.length ; i++){
                 addRow(i);
                 for (int j = 0 ; j < boardData[0].length ;j ++){
                     addColumn(j);
@@ -192,7 +230,7 @@ public class PipeBoard extends GridPane {
                     applyPhoto((MyButton)clickableNodeButton,boardData[i][j].get());
                     final int finalI = i;
                     final int  finalj = j;
-                    clickableNodeButton.setOnMouseClicked(e->this.rotate(finalI,finalj));
+                    clickableNodeButton.setOnMouseClicked(e->this.rotate(finalI,finalj,1,false));
                     add(clickableNodeButton,j,i);
                     // need to manage resize
 //                    this.setHgrow(clickableNodeButton,Priority.ALWAYS);
@@ -285,7 +323,7 @@ public class PipeBoard extends GridPane {
         redraw();
         // Set Solver Server
         try{
-            Scanner s = new Scanner(new File("./client/gameConf.txt"));
+            Scanner s = new Scanner(new File("gameConf.txt"));
             String configurations = s.nextLine();
             String[] c = configurations.split(":");
             this.ip = c[0];
@@ -294,34 +332,47 @@ public class PipeBoard extends GridPane {
             e.printStackTrace();
         }
     }
-    public void rotate(int row,int col){
+    public void rotate(int row,int col,int times,boolean serverSolution){
         String c = boardData[row][col].get();
-        switch(boardData[row][col].get()) {
-            case "F":
-                c = "7";
-                break;
-            case "7":
-                c = "J";
-                break;
-            case "J":
-                c = "L";
-                break;
-            case "L":
-                c = "F";
-                break;
-            case "-":
-                c = "|";
-                break;
-            case "|":
-                c = "-";
-                break;
+        for(int i=0;i<times;i++) {
+            switch (boardData[row][col].get()) {
+                case "F":
+                    c = "7";
+                    break;
+                case "7":
+                    c = "J";
+                    break;
+                case "J":
+                    c = "L";
+                    break;
+                case "L":
+                    c = "F";
+                    break;
+                case "-":
+                    c = "|";
+                    break;
+                case "|":
+                    c = "-";
+                    break;
+            }
+            boardData[row][col].setValue(c);
+            //add delay for animation
+            if(serverSolution){
+                try {
+                    TimeUnit.MILLISECONDS.sleep(500);
+                    redraw(row,col);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
         }
-        boardData[row][col].setValue(c);
-        redraw();
-        counter.setValue(counter.get()+1);
-        this.gameStatus.set(findPath(startLocation.getI(),startLocation.getJ(),this.boardData));
+        if(!serverSolution) {
+            redraw();
+            counter.setValue(counter.get() + 1);
+            this.gameStatus.set(findPath(startLocation.getI(), startLocation.getJ(), this.boardData));
+        }
     }
-
+    
     public String getHorizontal() {
         return horizontal.get();
     }

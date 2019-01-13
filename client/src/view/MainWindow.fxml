@@ -67,10 +67,10 @@
          </top>
          <center>
                    <PipeBoard fx:id="pipeBoardDisplayer" minWidth="300" minHeight="300" maxHeight="600" maxWidth="600"
-                       horizontal="./client/resources/i_horizontal.png" vertical="./client/resources/i_vertical.png"
-                       curveUpLeft="./client/resources/curve_up_left.png" curveUpRight="./client/resources/curve_up_right.png"
-                       curveDownLeft="./client/resources/curve_down_left.png" curveDownRight="./client/resources/curve_down_right.png"
-                       start="./client/resources/start-circle.png" end="./client/resources/end-circle.png"
+                       horizontal="./resources/i_horizontal.png" vertical="./resources/i_vertical.png"
+                       curveUpLeft="./resources/curve_up_left.png" curveUpRight="./resources/curve_up_right.png"
+                       curveDownLeft="./resources/curve_down_left.png" curveDownRight="./resources/curve_down_right.png"
+                       start="./resources/start-circle.png" end="./resources/end-circle.png"
                    />
          </center>
       </BorderPane>
