@@ -45,6 +45,9 @@ public class MainWindowController implements Initializable, View {
     @FXML
     Text moveCounter;
 
+    @FXML
+    BorderPane centerPane;
+
     private Timer timer;
 
     URL location;
@@ -91,11 +94,8 @@ public class MainWindowController implements Initializable, View {
                    // implement pop up window
                     //stop timer
                     Button lost = new Button("You Lost :(");
-                    lost.setOnAction(new EventHandler<ActionEvent>() {
-                        @Override
-                        public void handle(ActionEvent event) {
-                            pipeBoardDisplayer.setBoardData(charMatrixToString(boardData));
-                        }
+                    lost.setOnAction(e-> {
+                        rootPane.setCenter(centerPane);
                     });
                     Platform.runLater(new Runnable() {
                         @Override
@@ -113,11 +113,8 @@ public class MainWindowController implements Initializable, View {
                 // Only if completed
                 if (newValue) {
                     Button w = new Button("You Won :)");
-                    w.setOnAction(new EventHandler<ActionEvent>() {
-                        @Override
-                        public void handle(ActionEvent event) {
-                            initialize(location,resources);
-                        }
+                    w.setOnAction(e-> {
+                        rootPane.setCenter(centerPane);
                     });
                     rootPane.setCenter(w);
                     timerTask.cancel();

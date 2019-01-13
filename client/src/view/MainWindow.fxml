@@ -38,7 +38,7 @@
       </MenuBar>
    </top>
    <center>
-      <BorderPane BorderPane.alignment="CENTER">
+      <BorderPane fx:id="centerPane" BorderPane.alignment="CENTER">
          <top>
             <HBox prefWidth="1062.0" BorderPane.alignment="TOP_RIGHT">
                <children>
