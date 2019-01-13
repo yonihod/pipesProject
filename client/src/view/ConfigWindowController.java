@@ -6,15 +6,14 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.awt.*;
+import java.io.*;
 import java.net.URI;
 
 public class ConfigWindowController {
@@ -77,6 +76,15 @@ public class ConfigWindowController {
             Media musicFile = new Media(uri.toString());
             mp = new MediaPlayer(musicFile);
             mwc.setMediaPlayer(mp);
+        }
+    }
+    public void setBackgroundImage() throws FileNotFoundException {
+        FileChooser fc = new FileChooser();
+        fc.setTitle("Open Img File");
+        fc.setInitialDirectory(new File("./client/resources"));
+        File chosen = fc.showOpenDialog(null);
+        if(chosen!=null) {
+            mwc.setBgImg(chosen);
         }
     }
 }

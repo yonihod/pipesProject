@@ -11,6 +11,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.MediaPlayer;
@@ -23,18 +24,21 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.net.URI;
 import java.net.URL;
 import java.util.*;
 
 public class MainWindowController implements Initializable, View {
 
-    char[][] boardData = {{'s', '-', '7', ' '}, {' ', '|', 'L', '7'}, {'-', 'F', ' ', '|'}, {'7', 'F', '-', 'J'}, {' ', 'g', ' ', '-'}};
+    char[][] boardData = {{}};
     private MediaPlayer mp;
 
     public StringProperty timeLeft;
     private TimerTask timerTask;
     private IntegerProperty moves;
     private BooleanProperty completedProperty;
+
+    private String bgImg;
 
     @FXML
     Text countdown;
@@ -53,10 +57,10 @@ public class MainWindowController implements Initializable, View {
     BorderPane rootPane;
 
     private String[][] charMatrixToString(char[][] charM){
-        String[][] stringBoard = new String[boardData.length][boardData[0].length];
-        for(int i=0; i<boardData.length;i++){
-            for(int j=0; j<boardData[0].length;j++){
-                stringBoard[i][j] = String.valueOf(boardData[i][j]);
+        String[][] stringBoard = new String[charM.length][charM[0].length];
+        for(int i=0; i<charM.length;i++){
+            for(int j=0; j<charM[0].length;j++){
+                stringBoard[i][j] = String.valueOf(charM[i][j]);
             }
         }
         return stringBoard;
@@ -170,7 +174,9 @@ public class MainWindowController implements Initializable, View {
                 try {
                     FileWriter fw =  new FileWriter(chosen.getPath());
                     String boardData = pipeBoardDisplayer.boardToString(pipeBoardDisplayer.dataToCharArray());
-                    fw.write(boardData);
+                    fw.write(boardData +"\n");
+                    fw.write(this.countdown.getText() +"\n");
+                    fw.write(this.moveCounter.getText().substring(1));
                     fw.close();
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -192,5 +198,12 @@ public class MainWindowController implements Initializable, View {
     }
     public void setCountdown(String countdown) {
         this.timeLeft.set(countdown);
+    }
+
+    public void setBgImg(File bgImg) {
+        URI uri = bgImg.toURI();
+        rootPane.setStyle("-fx-background-image: url('" + uri + "'); " +
+                "-fx-background-position: center center; " +
+                "-fx-background-repeat: stretch;");
     }
 }
